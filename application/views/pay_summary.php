@@ -6,18 +6,18 @@
 	</div>
     <div class="row-fluid">
         <div class="span6">
-        <dl class="dl-horizontal">
-            <dt>Staff ID :</dt>
-            <dd><?php echo $teacher['staff_id']; ?></dd>
-            <dt>Designation :</dt>
-            <dd><?php echo $teacher['designation']; ?></dd>
-            <dt>Department :</dt> 
-            <dd><?php echo $teacher['department']; ?></dd>
-            <dt>Account Number : </dt>
-            <dd><?php echo $teacher['account_no']; ?></dd>   
-            <dt>Date Added : </dt>
-            <dd><?php echo $teacher_pay['dt']; ?></dd>
-        </dl>
+            <dl class="dl-horizontal">
+                <dt>Staff ID :</dt>
+                <dd><?php echo $teacher['staff_id']; ?></dd>
+                <dt>Designation :</dt>
+                <dd><?php echo $teacher['designation']; ?></dd>
+                <dt>Department :</dt> 
+                <dd><?php echo $teacher['department']; ?></dd>
+                <dt>Account Number : </dt>
+                <dd><?php echo $teacher['account_no']; ?></dd>   
+                <dt>Date Added : </dt>
+                <dd><?php echo $teacher_pay['dt']; ?></dd>
+            </dl>
         </div>
         <ul class="nav nav-pills pull-right">
             <li><a href="<?php echo base_url() ?>teaching/pay_details">Back</a></li>

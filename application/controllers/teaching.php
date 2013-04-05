@@ -111,10 +111,13 @@ class Teaching extends CI_Controller {
         $data['cur_teacher'] = $this->teacher->get_teacher_by_id($emp_id);
         $data['message'] = "";
         if($_POST) {
+            $date = new DateTime($_POST['date']);
+            $month_added = date_format($date, 'F Y');
             $data = array(
                 'emp_id' => $emp_id,
                 'emp_type' => $emp_type,
                 'date' => $_POST['date'],
+                'month_added' => $month_added,
                 'ppb' => $_POST['ppb'],
                 'agp' => $_POST['agp'],
                 'bp' => $_POST['bp'],
