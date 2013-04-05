@@ -28,6 +28,24 @@ class Teacher extends CI_Model {
 		return $query->first_row('array');
 	}
 
+	function check_employee_pay_by_id($emp_id) {
+		$this->db->select()->from('emp_pay')->where('emp_id', $emp_id);
+		$query = $this->db->get();
+		return $query->first_row('array');
+	}
+
+	function get_employee_by_month($month_added) {
+		$this->db->select()->from('emp_pay')->where('month_added', $month_added);
+		$query = $this->db->get();
+		return $query->first_row('array');
+	}
+
+	function get_employee_by_emp_id($emp_id) {
+		$this->db->select()->from('emp_pay')->where('emp_id', $emp_id);
+		$query = $this->db->get();
+		return $query->result_array();
+	}
+
 	function save_teacher($data) {
 		$this->db->insert('emp_info', $data);
 		return $this->db->insert_id();

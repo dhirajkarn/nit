@@ -6,6 +6,15 @@ class Teaching extends CI_Controller {
 		$this->load->model('teacher');
 	}
 
+    function test() {
+        $data['check_emp_pay'] = $this->teacher->check_employee_pay_by_id(41);
+        if($data['check_emp_pay'] == NULL) {
+            echo "pay hasn't been saved yet!";
+        } else {
+            echo "it works!";
+        }
+    }
+
 	function index() {
 		$data['teachers'] = $this->teacher->get_all_teachers();
         $data['non_teachers'] = $this->teacher->get_all_non_teachers();
@@ -111,9 +120,20 @@ class Teaching extends CI_Controller {
         $data['cur_teacher'] = $this->teacher->get_teacher_by_id($emp_id);
         $data['message'] = "";
         if($_POST) {
+            $valid = TRUE;
             $date = new DateTime($_POST['date']);
             $month_added = date_format($date, 'F Y');
-            $data = array(
+            $data['check_emp_pay'] = $this->teacher->check_employee_pay_by_id($emp_id);
+            $data['employee'] = $this->teacher->get_employee_by_emp_id($emp_id);
+            if($data['check_emp_pay'] != NULL) {
+                foreach ($data['employee'] as $row) {
+                    if($row['month_added'] == $month_added) {
+                        $valid = FALSE;
+                    }
+                }
+            }
+            if($valid == TRUE) {
+                $data = array(
                 'emp_id' => $emp_id,
                 'emp_type' => $emp_type,
                 'date' => $_POST['date'],
@@ -148,11 +168,15 @@ class Teaching extends CI_Controller {
                 'total_deduction' => $_POST['total_deduction'],
                 'net_amount' => $_POST['net_amount']
                 );
-            $teacher_id = $this->teacher->save_teacher_pay($data);
-            if($teacher_id) {
-                $data['cur_teacher'] = $this->teacher->get_teacher_by_id($emp_id);
-                $data['message'] = "<p>Employee pay details have been successfully saved!</p>";
+                $teacher_id = $this->teacher->save_teacher_pay($data);
+                if($teacher_id) {
+                    $data['cur_teacher'] = $this->teacher->get_teacher_by_id($emp_id);
+                    $data['message'] = "<p>Employee pay details for the month <strong>{$month_added}</strong> have been successfully saved!</p>";
+                }
+            } else {
+                $data['message'] = "<p>Duplicate Entry for the month <strong>{$month_added}</strong> !</p>";
             }
+            
         }
         $this->load->view('add_teacher_pay', $data);
     }
