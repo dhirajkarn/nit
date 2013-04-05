@@ -6,7 +6,17 @@
           </div>
         </div>
         <div class="row-fluid">
-          <form class="form-horizontal pull-right">
+          <form class="form-horizontal">
+            <div class="control-group">
+              <label class="control-label" for="selEmployee">Select Employee Type</label>
+              <div class="controls">
+                <select name="emp_type" id="emp_type">
+                <option value="">--Select Employee Type--</option>
+                  <option value="teaching">Teaching</option>
+                  <option value="non-teaching">Non-teaching</option>
+                </select>
+              </div>
+            </div>
             <div class="control-group">
               <label class="control-label" for="selMonth">Select Month</label>
               <div class="controls">
@@ -33,7 +43,8 @@
                             $.get(
                             'http://localhost:8080/nit/ajax/get_employees_by_month',
                             {
-                                sel_month: $(this).val()
+                                sel_month: $(this).val(),
+                                emp_type : $('#emp_type').val()
                             },
                             function(data) {
                                 $('#loading').hide();

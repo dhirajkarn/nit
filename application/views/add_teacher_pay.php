@@ -3,6 +3,18 @@
           <div class="hero-unit" style="padding:20px;">
             <h4><small>Enter Pay Details For : </small><?php echo $cur_teacher['name']; ?></h4>
           </div>
+          <div class="row-fluid">
+            <div class="span4 pull-right">
+              <dl class="dl-horizontal">
+                  <dt>Designation :</dt>
+                  <dd><?php echo $cur_teacher['designation']; ?></dd>
+                  <dt>Department :</dt> 
+                  <dd><?php echo $cur_teacher['department']; ?></dd>
+                  <dt>Account Number : </dt>
+                  <dd><?php echo $cur_teacher['account_no']; ?></dd>   
+              </dl>
+            </div>
+          </div>
           <?php if($message) { ?>
             <div class="alert alert-info">
               <button type="button" class="close" data-dismiss="alert">&times;</button>
@@ -10,7 +22,7 @@
             </div>
           <?php } ?>
           <div class="row-fluid">
-            <form action="<?php echo base_url(); ?>teaching/add_teacher_pay/<?php echo $cur_teacher['id']; ?>" method="post">
+            <form action="<?php echo base_url(); ?>teaching/add_teacher_pay/<?php echo $cur_teacher['emp_type']; ?>/<?php echo $cur_teacher['id']; ?>" method="post">
                   <fieldset>
                     <legend>Pay</legend>
               	<div class="span3" style="margin-left:0;">
@@ -50,25 +62,30 @@
                   <div class="span3">
                       <label>Washing Allowance</label>
                     <div class="input-prepend input-append">
-                      <input class="span8 required number" type="text" name="hra_per" id="hra_per">
-                      <span class="add-on">%</span>
+                      <input class="span8 required number" type="text" name="washing_allowance" id="washing_allowance">
+                      <span class="add-on">.00</span>
                     </div>
                     <label>Other Allowance</label>
                     <div class="input-prepend input-append">
-                      <input class="span8 required number" type="text" name="ta" id="ta">
+                      <input class="span8 required number" type="text" name="other_allowance" id="other_allowance">
                       <span class="add-on">.00</span>
                     </div>
                     <label>Hostel Chairman/Supdt. Allowance</label>
                     <div class="input-prepend input-append">
-                      <input class="span8 required number" type="text" name="spl_allowance" id="spl_allowance">
+                      <input class="span8 required number" type="text" name="hostel_supdt" id="hostel_supdt">
                       <span class="add-on">.00</span>
                     </div>
                   </div><!-- end of 3rd row of pay -->
                   <div class="span3">
                       <label>Family Planning</label>
                     <div class="input-prepend input-append">
-                      <input class="span8 required number" type="text" name="hra_per" id="hra_per">
-                      <span class="add-on">%</span>
+                      <input class="span8 required number" type="text" name="family_planning" id="family_planning">
+                      <span class="add-on">.00</span>
+                    </div>
+                    <label>Telephone Allowance</label>
+                    <div class="input-prepend input-append">
+                      <input class="span8 required number" type="text" name="tel_allowance" id="tel_allowance">
+                      <span class="add-on">.00</span>
                     </div>
                     
                   </div><!-- end of 3rd row of pay -->
@@ -78,14 +95,14 @@
               <fieldset>
                 <legend>Deduction</legend>
                 <div class="span3" style="margin-left:0;">
-                    <label>P.F. DEDUCTION</label>
+                    <label>P.F. Deduction</label>
                     <div class="input-prepend input-append">
                       <input class="span8 required number" type="text" name="pf" id="pf">
                       <span class="add-on">.00</span>
                     </div>
-                    <label>NPS CONTRIBUTION</label>
+                    <label>NPS Contribution</label>
                     <div class="input-prepend input-append">
-                      <input class="span8 required number" type="text" name="gsli_one" id="gsli_one">
+                      <input class="span8 required number" type="text" name="nps_contribution" id="nps_contribution">
                       <span class="add-on">.00</span>
                     </div>
                     <label>Income Tax</label>
@@ -95,53 +112,79 @@
                     </div>
                 </div><!-- end of 1st row of deduction -->
                 <div class="span3">
-                    <label>HOUSE RENT </label>
+                    <label>House Rent </label>
                     <div class="input-prepend input-append">
                       <input class="span8 required number" type="text" name="hrd" id="hrd">
                       <span class="add-on">.00</span>
                     </div>
-                    <label>Rec PF</label>
-                    <div class="input-prepend input-append">
-                      <input class="span8 required number" type="text" name="rec_pf" id="rec_pf">
-                      <span class="add-on">.00</span>
-                    </div>
-                    <label>ELECTRICITY CHARGE</label>
+                    <label>Electricity Charge</label>
                     <div class="input-prepend input-append">
                       <input class="span8 required number" type="text" name="ec" id="ec">
                       <span class="add-on">.00</span>
                     </div>
+                    <label>GSLI Deduction</label>
+                    <div class="input-prepend input-append">
+                      <input class="span8 required number" type="text" name="gsli_deduction" id="gsli_deduction">
+                      <span class="add-on">.00</span>
+                    </div>
                 </div><!-- end of 2nd row of deduction -->
                   <div class="span3">
-                    <label>GSLI(II)</label>
+                    <label>Festival Advanced Recovery</label>
                     <div class="input-prepend input-append">
-                      <input class="span8 required number" type="text" name="gsli_two" id="gsli_two">
+                      <input class="span8 required number" type="text" name="festival_adv_recovery" id="festival_adv_recovery">
                       <span class="add-on">.00</span>
                     </div>
-                    <label>P TAX</label>
+                    <label>GPF Loan Recovery</label>
                     <div class="input-prepend input-append">
-                      <input class="span8 required number" type="text" name="p_tax" id="p_tax">
+                      <input class="span8 required number" type="text" name="gpf_loan_recovery" id="gpf_loan_recovery">
                       <span class="add-on">.00</span>
                     </div>
-                    <label>DATE</label>
+                    <label>Bike/Computer Recovery</label>
+                      <div class="input-prepend input-append">                        
+                        <input class="span8 required" type="text" name="bike_com_recovery" id="bike_com_recovery">
+                        <span class="add-on">.00</span>
+                      </div>
+                  </div><!-- end of 3rd row of deduction -->
+                  <div class="span3">
+                    <label>Loan Recovery</label>
+                    <div class="input-prepend input-append">
+                      <input class="span8 required number" type="text" name="loan_recovery" id="loan_recovery">
+                      <span class="add-on">.00</span>
+                    </div>
+                    <label>LIC II Deduction</label>
+                    <div class="input-prepend input-append">
+                      <input class="span8 required number" type="text" name="lic_2_deduction" id="lic_2_deduction">
+                      <span class="add-on">.00</span>
+                    </div>
+                    <label>Flood Donation</label>
+                    <div class="input-prepend input-append">
+                      <input class="span8 required number" type="text" name="flood_donation" id="flood_donation">
+                      <span class="add-on">.00</span>
+                    </div>
+                  </div><!-- end of 4th row of deduction -->
+                  <div class="row-fluid">
+                    <div class="span3">
+                      <label>Professional Tax Deduction</label>
+                      <div class="input-prepend input-append">
+                        <input class="span8 required number" type="text" name="pro_tax_deduction" id="pro_tax_deduction">
+                        <span class="add-on">.00</span>
+                      </div>
+                    </div>
+                    <div class="span3">
+                      <label>Other Deduction</label>
+                      <div class="input-prepend input-append">
+                        <input class="span8 required number" type="text" name="other_deduction" id="other_deduction">
+                        <span class="add-on">.00</span>
+                      </div>
+                    </div>
+                    <div class="span3">
+                      <label>DATE</label>
                       <div class="input-prepend input-append">
                         <span class="add-on">@</span>
                         <input class="span8 required" id="date" type="text" name="date">
                       </div>
-                  </div><!-- end of 3rd row of deduction -->
-                  <div class="span3">
-                    <label>GSLI(II)</label>
-                    <div class="input-prepend input-append">
-                      <input class="span8 required number" type="text" name="gsli_two" id="gsli_two">
-                      <span class="add-on">.00</span>
                     </div>
-                    <label>P TAX</label>
-                    <div class="input-prepend input-append">
-                      <input class="span8 required number" type="text" name="p_tax" id="p_tax">
-                      <span class="add-on">.00</span>
-                    </div>
-                    <label>DATE</label>
-                      <input class="span8 required" id="date" type="text" name="date">
-                  </div><!-- end of 4th row of deduction -->
+                  </div>
                   </fieldset>
                 </div>
               <div class="row-fluid">
