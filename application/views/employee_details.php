@@ -13,12 +13,28 @@
         </div>
 
         <div class="row-fluid">
-          <h4>Employee's Pay Details have been saved for the following months : </h4>
+          <div class="span6">
+            <dl class="dl-horizontal">
+                <dt>Staff ID :</dt>
+                <dd><?php echo $employee['staff_id']; ?></dd>
+                <dt>Designation :</dt>
+                <dd><?php echo $employee['designation']; ?></dd>
+                <dt>Department :</dt> 
+                <dd><?php echo $employee['department']; ?></dd>
+                <dt>Account Number : </dt>
+                <dd><?php echo $employee['account_no']; ?></dd>   
+            </dl>
+          </div>
+        </div>
+        <hr>
+        <div class="row-fluid">
+          <h4><?php echo $employee['name'] ?>'s <small>Pay Details have been saved for the following months : </small></h4>
           <ul class="nav nav-pills nav-stacked">
             <?php foreach($emp_months_info as $row) { ?>
               <li class="active"><a href="<?php echo base_url() ?>teaching/pay_summary/<?php echo $row['emp_id'] ?>/<?php echo $row['date'] ?>"><?php echo $row['date'] ?></a></li>
             <?php } ?>
           </ul>
+          <a class="btn btn-info btn-primary" href="<?php echo base_url(); ?>teaching/add_teacher_pay/<?php echo $employee['emp_type'] ?>/<?php echo $employee['id'] ?>">Add Pay</a>
         </div>
         
       </div>

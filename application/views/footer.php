@@ -7,7 +7,7 @@
 <script src="<?php echo base_url() ?>assets/js/emp_pay.js"></script>
 <script>
   $(document).ready(function() {
-    $('#date').datepicker({dateFormat : 'yy-mm-dd', minDate : -5, maxDate : '+1m +5d',
+    $('#date').datepicker({dateFormat : 'yy-mm-dd',
        showAnim : 'fade' });
   })
 </script>
