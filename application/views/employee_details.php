@@ -14,6 +14,11 @@
 
         <div class="row-fluid">
           <h4>Employee's Pay Details have been saved for the following months : </h4>
+          <ul class="nav nav-pills nav-stacked">
+            <?php foreach($emp_months_info as $row) { ?>
+              <li class="active"><a href="<?php echo base_url() ?>teaching/pay_summary/<?php echo $row['emp_id'] ?>/<?php echo $row['date'] ?>"><?php echo $row['date'] ?></a></li>
+            <?php } ?>
+          </ul>
         </div>
         
       </div>

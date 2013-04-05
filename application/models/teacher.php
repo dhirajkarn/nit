@@ -17,7 +17,7 @@ class Teacher extends CI_Model {
 	}
 
 	function get_all_months_entered($emp_type, $emp_id) {
-		$sql = "SELECT *, DATE_FORMAT(date, '%M, %Y') as date, DATE_FORMAT(date, '%d/%c/%Y') as dt FROM emp_pay WHERE emp_type='{$emp_type}' AND emp_id = {$emp_id}";
+		$sql = "SELECT *, DATE_FORMAT(date, '%M %Y') as date, DATE_FORMAT(date, '%d/%c/%Y') as dt FROM emp_pay WHERE emp_type='{$emp_type}' AND emp_id = {$emp_id}";
 		$query = $this->db->query($sql);
 		return $query->result_array();
 	}
