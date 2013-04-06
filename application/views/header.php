@@ -43,7 +43,7 @@
                 <b class="caret"></b>
               </a>
               <ul class="dropdown-menu">
-                <li><a href="<?php echo base_url(); ?>teaching/add_teacher">Add New Teacher</a></li>
+                <li><a href="<?php echo base_url(); ?>teaching/add_teacher">New Employee</a></li>
                 <li><a href="#">Download</a></li>
                 <li><a href="#">Tutorials</a></li>
                 <li><a href="#">Blogs</a></li>
