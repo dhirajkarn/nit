@@ -17,7 +17,7 @@ class Teacher extends CI_Model {
 	}
 
 	function get_all_months_entered($emp_type, $emp_id) {
-		$sql = "SELECT *, DATE_FORMAT(date, '%M %Y') as date, DATE_FORMAT(date, '%d/%c/%Y') as dt FROM emp_pay WHERE emp_type='{$emp_type}' AND emp_id = {$emp_id}";
+		$sql = "SELECT *, month_added FROM emp_pay WHERE emp_type='{$emp_type}' AND emp_id = {$emp_id} ORDER BY date DESC";
 		$query = $this->db->query($sql);
 		return $query->result_array();
 	}
@@ -71,6 +71,15 @@ class Teacher extends CI_Model {
 		$this->db->delete('emp_pay');
 	}
 
+	function delete_emp_pay_by_month($emp_id, $month_added) {
+		$where = array(
+			'emp_id' => $emp_id,
+			'month_added' => $month_added
+			);
+		$this->db->where($where);
+		$this->db->delete('emp_pay');
+	}
+
 	// Teacher's Pay Details
 
 	function get_teacher_pay($emp_id) {
@@ -101,7 +110,7 @@ class Teacher extends CI_Model {
 	}
 
 	function get_all_months() {
-		$sql = "SELECT DISTINCT DATE_FORMAT(date, '%M %Y') as date FROM emp_pay GROUP BY date ORDER BY date ASC";
+		$sql = "SELECT DISTINCT DATE_FORMAT(date, '%M %Y') as dt FROM emp_pay ORDER BY date DESC";
 		$query = $this->db->query($sql);
 		return $query->result_array();
 	}

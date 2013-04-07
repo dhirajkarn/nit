@@ -23,7 +23,7 @@
                 <select name="sel_month" id="sel_month">
                 <option value="">--Select Month--</option>
                   <?php foreach($month_list as $row) { ?>
-                  <option value="<?php echo $row['date']; ?>"><?php echo $row['date']; ?></option>
+                  <option value="<?php echo $row['dt']; ?>"><?php echo $row['dt']; ?></option>
                   <?php } ?>
                 </select>
               </div>

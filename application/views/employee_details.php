@@ -29,12 +29,17 @@
         <hr>
         <div class="row-fluid">
           <h4><?php echo $employee['name'] ?>'s <small>Pay Details have been saved for the following months : </small></h4>
-          <ul class="nav nav-pills nav-stacked">
             <?php foreach($emp_months_info as $row) { ?>
-              <li class="active"><a href="<?php echo base_url() ?>teaching/pay_summary/<?php echo $row['emp_id'] ?>/<?php echo $row['date'] ?>"><?php echo $row['date'] ?></a></li>
+              <div class="input-append">
+                <a class="btn" style="width: 150px;" href="<?php echo base_url() ?>teaching/pay_summary/<?php echo $row['emp_id'] ?>/<?php echo $row['month_added'] ?>"><?php echo $row['month_added'] ?></a>
+                <a class="btn btn-info" href="">Edit</a>
+                <a class="btn btn-danger" href="<?php echo base_url() ?>teaching/delete_emp_pay_by_month/<?php echo $row['emp_id'] ?>/<?php echo $row['month_added'] ?>">Delete</a>
+              </div>
+              <br>
             <?php } ?>
-          </ul>
-          <a class="btn btn-info btn-primary" href="<?php echo base_url(); ?>teaching/add_teacher_pay/<?php echo $employee['emp_type'] ?>/<?php echo $employee['id'] ?>">Add Pay</a>
+        </div>
+        <div class="row-fluid">
+          <a class="btn btn-primary btn-large" href="<?php echo base_url(); ?>teaching/add_teacher_pay/<?php echo $employee['emp_type'] ?>/<?php echo $employee['id'] ?>">Add Pay</a>
         </div>
         
       </div>

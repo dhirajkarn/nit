@@ -34,7 +34,7 @@
                     <?php $i = 0; foreach($teachers as $row) { $i++; ?>
                     <tr>
                       <td><strong><?php echo $i; ?></strong></td>
-                      <td><a href="<?php echo base_url(); ?>teaching/employee_details/<?php echo $row['emp_type'] ?>/<?php echo $row['id'] ?>" data-toggle="tooltip" title="Click Here for details"><?php echo $row['name']; ?></a></td>
+                      <td><a href="<?php echo base_url(); ?>teaching/employee_details/<?php echo $row['emp_type'] ?>/<?php echo $row['id'] ?>" data-toggle="tooltip" title="Click here for details"><?php echo $row['name']; ?></a></td>
                       <td><?php echo $row['designation']; ?></td>
                       <td><?php echo $row['department']; ?></td>
                       <td><?php echo $row['account_no']; ?></td>
@@ -84,7 +84,7 @@
                     <?php $i = 0; foreach($non_teachers as $row) { $i++; ?>
                     <tr>
                       <td><strong><?php echo $i; ?></strong></td>
-                      <td><a href="<?php echo base_url(); ?>teaching/employee_details/<?php echo $row['emp_type'] ?>/<?php echo $row['id'] ?>" data-toggle="tooltip" title="Click Here to get Pay Summary"><?php echo $row['name']; ?></a></td>
+                      <td><a href="<?php echo base_url(); ?>teaching/employee_details/<?php echo $row['emp_type'] ?>/<?php echo $row['id'] ?>" data-toggle="tooltip" title="Click here for details"><?php echo $row['name']; ?></a></td>
                       <td><?php echo $row['designation']; ?></td>
                       <td><?php echo $row['department']; ?></td>
                       <td><?php echo $row['account_no']; ?></td>

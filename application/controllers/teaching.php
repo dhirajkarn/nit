@@ -181,6 +181,14 @@ class Teaching extends CI_Controller {
         $this->load->view('add_teacher_pay', $data);
     }
 
+    function delete_emp_pay_by_month($emp_id, $month_added) {
+        $emp_id = $this->uri->segment(3);
+        $month_added = urldecode($this->uri->segment(4));
+        $this->teacher->delete_emp_pay_by_month($emp_id, $month_added);
+        $this->session->set_flashdata('message', "<p>Employee's data for the month <strong>{$month_added}</strong> is successfully deleted!</p>");
+        redirect(base_url());
+    }
+
     function pay_details() {
         $data['month_list'] = $this->teacher->get_all_months();
         $this->load->view('pay_details', $data);
