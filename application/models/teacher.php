@@ -56,6 +56,12 @@ class Teacher extends CI_Model {
 		return $query->result_array();
 	}
 
+	function get_employee_latest_pay($emp_id) {
+		$this->db->select()->from('emp_pay')->where('emp_id', $emp_id)->order_by('date', 'desc');
+		$query = $this->db->get();
+		return $query->first_row('array');
+	}
+
 	function save_teacher($data) {
 		$this->db->insert('emp_info', $data);
 		return $this->db->insert_id();
