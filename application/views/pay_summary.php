@@ -23,7 +23,7 @@
             <li><a href="<?php echo base_url() ?>teaching/pay_details">Back</a></li>
           <li class="active"><a href="#">Print</a></li>
           <li class="active"><a href="#">Edit</a></li>
-          <li class="active"><a href="#">Delete</a></li>
+          <li class="active"><a href="<?php echo base_url() ?>teaching/delete_emp_pay_by_month/<?php echo $teacher_pay['emp_id'] ?>/<?php echo $teacher_pay['month_added'] ?>">Delete</a></li>
         </ul>
     </div>
     <br>

@@ -171,7 +171,8 @@ class Teaching extends CI_Controller {
                 $teacher_id = $this->teacher->save_teacher_pay($data);
                 if($teacher_id) {
                     $data['cur_teacher'] = $this->teacher->get_teacher_by_id($emp_id);
-                    $data['message'] = "<p><span class=\"label label-success\">Success</span>&emsp; Employee pay details for the month <strong>{$month_added}</strong> have been successfully saved!</p>";
+                    $this->session->set_flashdata('message', "<p><span class=\"label label-success\">Success</span>&emsp; <em>{$data['cur_teacher']['name']}'s</em> pay details for the month <strong>{$month_added}</strong> have been successfully saved!</p>");
+                    redirect(base_url());
                 }
             } else {
                 $data['message'] = "<p><span class=\"label label-warning\">Warning</span>&emsp; Duplicate Entry for the month <strong>{$month_added}</strong> !</p>";
