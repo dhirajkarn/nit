@@ -182,6 +182,64 @@ class Teaching extends CI_Controller {
         $this->load->view('add_teacher_pay', $data);
     }
 
+    function edit_employee_pay($emp_id, $month_added) {
+        $emp_id = $this->uri->segment(3);
+        $month_added = urldecode($this->uri->segment(4));
+        $data['cur_teacher'] = $this->teacher->get_teacher_by_id($emp_id);
+        $data['cur_emp_pay'] = $this->teacher->get_employee_pay_by_month($emp_id, $month_added);
+        $data['message'] = "";
+        if($_POST) {
+            $valid = TRUE;
+            $date = new DateTime($_POST['date']);
+            $month_entered = date_format($date, 'F Y');
+            if($month_entered != $month_added) {
+                $valid = FALSE;
+            }
+            if($valid == TRUE) {
+                $data = array(
+                    'date' => $_POST['date'],
+                    'ppb' => $_POST['ppb'],
+                    'agp' => $_POST['agp'],
+                    'bp' => $_POST['bp'],
+                    'da' => $_POST['da'],
+                    'hra' => $_POST['hra'],
+                    'ta' => $_POST['ta'],
+                    'washing_allowance' => $_POST['washing_allowance'],
+                    'other_allowance' => $_POST['other_allowance'],
+                    'spl_allowance' => $_POST['spl_allowance'],
+                    'hostel_supdt' => $_POST['hostel_supdt'],
+                    'family_planning' => $_POST['family_planning'],
+                    'tel_allowance' => $_POST['tel_allowance'],
+                    'total_amount' => $_POST['total_amount'],
+                    'pf' => $_POST['pf'],
+                    'nps_contribution' => $_POST['nps_contribution'],
+                    'it' => $_POST['it'],
+                    'hrd' => $_POST['hrd'],
+                    'ec' => $_POST['ec'],
+                    'gsli_deduction' => $_POST['gsli_deduction'],
+                    'festival_adv_recovery' => $_POST['festival_adv_recovery'],
+                    'gpf_loan_recovery' => $_POST['gpf_loan_recovery'],
+                    'bike_com_recovery' => $_POST['bike_com_recovery'],
+                    'loan_recovery' => $_POST['loan_recovery'],
+                    'lic_2_deduction' => $_POST['lic_2_deduction'],
+                    'flood_donation' => $_POST['flood_donation'],
+                    'pro_tax_deduction' => $_POST['pro_tax_deduction'],
+                    'other_deduction' => $_POST['other_deduction'],
+                    'total_deduction' => $_POST['total_deduction'],
+                    'net_amount' => $_POST['net_amount']
+                    );
+                $this->teacher->update_employee_pay($emp_id, $month_added, $data);
+                $data['cur_teacher'] = $this->teacher->get_teacher_by_id($emp_id);
+                $this->session->set_flashdata('message', "<p><span class=\"label label-success\">Success</span>&emsp;<strong>{$data['cur_teacher']['name']}</strong>'s pay details for the month <strong>{$month_added}</strong> have been successfully updated!</p>");
+                redirect(base_url()."teaching/pay_summary/{$emp_id}/{$month_added}");
+            } else {
+                $data['message'] = "<p><span class=\"label label-warning\">Warning</span>&emsp; Entry should be within <strong>{$month_added}</strong> only!</p>";
+            }
+        }
+
+        $this->load->view('edit_employee_pay', $data);
+    }
+
     function delete_emp_pay_by_month($emp_id, $month_added) {
         $emp_id = $this->uri->segment(3);
         $month_added = urldecode($this->uri->segment(4));

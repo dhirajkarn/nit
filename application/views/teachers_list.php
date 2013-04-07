@@ -16,7 +16,7 @@
           <div class="accordion-group">
             <div class="accordion-heading">
               <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion2" href="#collapseOne">
-                <strong>Teachers List</strong>
+                <strong>Teachers List</strong>&emsp;<small><em>(click to expand)</em></small>
               </a>
             </div>
             <div id="collapseOne" class="accordion-body collapse">
@@ -41,7 +41,7 @@
                       <!-- action btn starts -->
                         <td>
                           <div class="btn-group">
-                            <button class="btn btn-info">Action</button>
+                            <button class="btn btn-info">Options</button>
                             <button class="btn dropdown-toggle" data-toggle="dropdown">
                               <span class="caret info"></span>
                             </button>
@@ -66,7 +66,7 @@
           <div class="accordion-group">
             <div class="accordion-heading">
               <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion2" href="#collapseTwo">
-                <strong>Non-teachers List</strong>
+                <strong>Non-teachers List</strong>&emsp;<small><em>(click to expand)</em></small>
               </a>
             </div>
             <div id="collapseTwo" class="accordion-body collapse">
@@ -91,7 +91,7 @@
                       <!-- action btn starts -->
                         <td>
                           <div class="btn-group">
-                            <button class="btn btn-info">Action</button>
+                            <button class="btn btn-info">Options</button>
                             <button class="btn dropdown-toggle" data-toggle="dropdown">
                               <span class="caret"></span>
                             </button>

@@ -32,7 +32,7 @@
             <?php foreach($emp_months_info as $row) { ?>
               <div class="input-append">
                 <a class="btn" style="width: 200px;" href="<?php echo base_url() ?>teaching/pay_summary/<?php echo $row['emp_id'] ?>/<?php echo $row['month_added'] ?>"><?php echo $row['month_added'] ?></a>
-                <a class="btn btn-info" href="">Edit</a>
+                <a class="btn btn-info" href="<?php echo base_url() ?>teaching/edit_employee_pay/<?php echo $row['emp_id'] ?>/<?php echo $row['month_added'] ?>">Edit</a>
                 <a class="btn btn-danger" href="<?php echo base_url() ?>teaching/delete_emp_pay_by_month/<?php echo $row['emp_id'] ?>/<?php echo $row['month_added'] ?>">Delete</a>
               </div>
               <br>

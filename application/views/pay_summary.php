@@ -4,6 +4,12 @@
 	<div class="hero-unit" style="padding:20px;">
 	    <h3><small>Pay Summary For </small><?php echo $teacher['name']; ?><small> For the Month </small><?php echo $teacher_pay['date']; ?></h3>
 	</div>
+    <?php if($this->session->flashdata('message')) { ?>
+        <div class="alert alert-info">
+          <button type="button" class="close" data-dismiss="alert">&times;</button>
+          <span class="text-center"><?php echo $this->session->flashdata('message'); ?></span>
+        </div>
+    <?php } ?>
     <div class="row-fluid">
         <div class="span6">
             <dl class="dl-horizontal">
@@ -22,7 +28,7 @@
         <ul class="nav nav-pills pull-right">
             <li><a href="<?php echo base_url() ?>teaching/pay_details">Back</a></li>
           <li class="active"><a href="#">Print</a></li>
-          <li class="active"><a href="#">Edit</a></li>
+          <li class="active"><a href="<?php echo base_url() ?>teaching/edit_employee_pay/<?php echo $teacher_pay['emp_id'] ?>/<?php echo $teacher_pay['month_added'] ?>">Edit</a></li>
           <li class="active"><a href="<?php echo base_url() ?>teaching/delete_emp_pay_by_month/<?php echo $teacher_pay['emp_id'] ?>/<?php echo $teacher_pay['month_added'] ?>">Delete</a></li>
         </ul>
     </div>
