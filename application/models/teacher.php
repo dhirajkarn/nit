@@ -40,10 +40,26 @@ class Teacher extends CI_Model {
 		return $query->first_row('array');
 	}
 
+	function get_employee_pay_by_month($emp_id, $month_added) {
+		$where = array(
+			'emp_id' => $emp_id,
+			'month_added' => $month_added
+			);
+		$this->db->select()->from('emp_pay')->where($where);
+		$query = $this->db->get();
+		return $query->first_row('array');
+	}
+
 	function get_employee_by_emp_id($emp_id) {
 		$this->db->select()->from('emp_pay')->where('emp_id', $emp_id);
 		$query = $this->db->get();
 		return $query->result_array();
+	}
+
+	function get_employee_latest_pay($emp_id) {
+		$this->db->select()->from('emp_pay')->where('emp_id', $emp_id)->order_by('date', 'desc');
+		$query = $this->db->get();
+		return $query->first_row('array');
 	}
 
 	function save_teacher($data) {
@@ -99,8 +115,12 @@ class Teacher extends CI_Model {
 		return $this->db->insert_id();
 	}
 
-	function update_teacher_pay($emp_id, $data) {
-		$this->db->where('id', $emp_id);
+	function update_employee_pay($emp_id, $month_added, $data) {
+		$where = array(
+			'emp_id' => $emp_id,
+			'month_added' => $month_added
+			);
+		$this->db->where($where);
 		$this->db->update('emp_pay', $data);
 	}
 

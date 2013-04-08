@@ -7,8 +7,12 @@ class Teaching extends CI_Controller {
 	}
 
     function test() {
-        $data['latest'] = $this->teacher->get_employee_latest_pay(45);
-        echo $data['latest']['month_added'];
+        $data['check_emp_pay'] = $this->teacher->check_employee_pay_by_id(41);
+        if($data['check_emp_pay'] == NULL) {
+            echo "pay hasn't been saved yet!";
+        } else {
+            echo "it works!";
+        }
     }
 
 	function index() {
@@ -113,7 +117,7 @@ class Teaching extends CI_Controller {
     function add_teacher_pay($emp_type, $emp_id) {
         $emp_type = $this->uri->segment(3);
         $emp_id = $this->uri->segment(4);
-        $data_latest['message'] = "";
+        $data['cur_teacher'] = $this->teacher->get_teacher_by_id($emp_id);
         $data['message'] = "";
         if($_POST) {
             $valid = TRUE;
@@ -172,21 +176,10 @@ class Teaching extends CI_Controller {
                 }
             } else {
                 $data['message'] = "<p><span class=\"label label-warning\">Warning</span>&emsp; Duplicate Entry for the month <strong>{$month_added}</strong> !</p>";
-                $data_latest['message'] = "<p><span class=\"label label-warning\">Warning</span>&emsp; Duplicate Entry for the month <strong>{$month_added}</strong> !</p>";
             }
             
         }
-        $data_latest['cur_emp_pay'] = $this->teacher->get_employee_latest_pay($emp_id);
-        if($data_latest['cur_emp_pay'] != NULL) {
-            $data_latest['cur_teacher'] = $this->teacher->get_teacher_by_id($emp_id);
-            $this->load->view('add_teacher_pay', $data_latest);
-        } else {
-            $data['cur_teacher'] = $this->teacher->get_teacher_by_id($emp_id);
-            $data['cur_emp_pay'] = NULL;
-            $this->load->view('add_teacher_pay', $data);
-        }
-
-        
+        $this->load->view('add_teacher_pay', $data);
     }
 
     function edit_employee_pay($emp_id, $month_added) {

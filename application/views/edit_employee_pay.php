@@ -1,7 +1,7 @@
 <?php $this->load->view('header'); ?>
       <div class="span10">
           <div class="hero-unit" style="padding:20px;">
-            <h4><small>Enter Pay Details For : </small><?php echo $cur_teacher['name']; ?></h4>
+            <h4><small>Edit Pay Details For : </small><?php echo $cur_teacher['name']; ?><small> for the month </small><?php echo $cur_emp_pay['month_added']; ?></h4>
           </div>
           <div class="row-fluid">
             <div class="span4 pull-right">
@@ -24,10 +24,10 @@
             </div>
           <?php } ?>
           <div class="row-fluid">
-            <form action="<?php echo base_url(); ?>teaching/add_teacher_pay/<?php echo $cur_teacher['emp_type']; ?>/<?php echo $cur_teacher['id']; ?>" method="post">
+            <form action="<?php echo base_url(); ?>teaching/edit_employee_pay/<?php echo $cur_teacher['id']; ?>/<?php echo $cur_emp_pay['month_added']; ?>" method="post">
                   <fieldset>
                     <legend>Pay</legend>
-                <div class="span3" style="margin-left:0;">
+              	<div class="span3" style="margin-left:0;">
                     <label>Pay In Pay Band</label>
                     <div class="input-prepend input-append">
                       <input class="span8 required number" type="text" name="ppb" id="ppb" value="<?php echo $cur_emp_pay['ppb']; ?>">
@@ -192,7 +192,7 @@
               <div class="row-fluid">
                 <fieldset>
                   <legend>Summary</legend>   
-                     <div class="span3" style="margin-left:0;">
+            	       <div class="span3" style="margin-left:0;">
                         <label>Basic Pay</label>
                             <div class="input-prepend input-append">
                               <span class="add-on">Rs.</span>
@@ -236,7 +236,7 @@
                      </div>
             <div class="form-actions">
           	  <input type="button" id="calculate" value="Calculate" class="btn btn-primary">
-              <input type="submit" name="submit" id="submit" value="Save" class="btn btn-primary pull-right" disabled>
+              <input type="submit" name="submit" id="submit" value="Update" class="btn btn-primary pull-right" disabled>
               <button type="button" class="btn">Cancel</button>
             </div>
         </form>
