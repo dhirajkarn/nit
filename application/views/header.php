@@ -2,8 +2,9 @@
 <html>
 <head>
 <meta charset="utf-8">
-<title>Untitled Document</title>
+<title>NIT PATNA | LOCAL</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="shortcut icon" href="<?php echo base_url() ?>assets/img/nit-patna-logo.jpg" />
 <script src="<?php echo base_url() ?>assets/js/jquery.js"></script>
     <!-- Bootstrap -->
     <link href="<?php echo base_url() ?>assets/css/bootstrap.css" rel="stylesheet" media="screen">
