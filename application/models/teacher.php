@@ -16,6 +16,67 @@ class Teacher extends CI_Model {
         return $query->result_array();
 	}
 
+	function get_percent_of_emp_entered($total_emp, $emp_entered) {
+		$total_percent = ($emp_entered*100)/$total_emp."%";
+		return $total_percent;
+	}
+
+	function get_percent_of_emp_entered_by_type($emp_type, $total_emp, $emp_entered) {
+		if($emp_type == "teaching") {
+            $total_emp = 77;
+        } else {
+            $total_emp = 97;
+        }
+		$total_percent = ($emp_entered*100)/$total_emp."%";
+		return $total_percent;
+	}
+
+	function get_current_month() {
+		$sql = "SELECT DATE_FORMAT(date, '%M %Y') as dt FROM emp_pay ORDER BY date DESC";
+		$query = $this->db->query($sql);
+		return $query->first_row('array');
+	}
+
+	// function get_all_nps_teachers() {
+	// 	$where = array(
+	// 		'emp_type' => 'teaching',
+	// 		'emp_cat' => 'nps'
+	// 		);
+	// 	$this->db->select()->from('emp_info')->where($where);
+ //        $query = $this->db->get();
+ //        return $query->result_array();
+	// }
+
+	// function get_all_gpf_teachers() {
+	// 	$where = array(
+	// 		'emp_type' => 'teaching',
+	// 		'emp_cat' => 'gpf'
+	// 		);
+	// 	$this->db->select()->from('emp_info')->where($where);
+ //        $query = $this->db->get();
+ //        return $query->result_array();
+	// }
+
+	// function get_all_nps_non_teachers() {
+	// 	$where = array(
+	// 		'emp_type' => 'non-teaching',
+	// 		'emp_cat' => 'nps'
+	// 		);
+	// 	$this->db->select()->from('emp_info')->where($where);
+ //        $query = $this->db->get();
+ //        return $query->result_array();
+	// }
+
+	// function get_all_gpf_non_teachers() {
+	// 	$where = array(
+	// 		'emp_type' => 'non-teaching',
+	// 		'emp_cat' => 'gpf'
+	// 		);
+	// 	$this->db->select()->from('emp_info')->where($where);
+ //        $query = $this->db->get();
+ //        return $query->result_array();
+	// }
+
 	function get_all_months_entered($emp_type, $emp_id) {
 		$sql = "SELECT *, month_added FROM emp_pay WHERE emp_type='{$emp_type}' AND emp_id = {$emp_id} ORDER BY date DESC";
 		$query = $this->db->query($sql);

@@ -13,22 +13,12 @@
       body {
         //background-image: url('<?php echo base_url(); ?>assets/images/bg-body-bright.png');
       }
-      
-    	.container-fluid {
-        width: 1300px;
-        margin: 0 auto;
-		  }
-  		label {
-  			color: red;
-  		}
-  		.span10 {
-  		}
     </style>
 </head>
 
 <body>
 <div class="container-fluid">
-    <div class="navbar">
+    <div class="navbar navbar-inverse">
       <div class="navbar-inner">
         <a class="brand" href="#">NIT PATNA</a>
         <ul class="nav">

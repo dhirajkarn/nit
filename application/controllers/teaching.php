@@ -7,13 +7,34 @@ class Teaching extends CI_Controller {
 	}
 
     function test() {
-        $data['latest'] = $this->teacher->get_employee_latest_pay(45);
-        echo $data['latest']['month_added'];
+        $cur_m = $this->teacher->get_current_month();
+        echo $cur_m['dt'];
     }
 
 	function index() {
 		$data['teachers'] = $this->teacher->get_all_teachers();
         $data['non_teachers'] = $this->teacher->get_all_non_teachers();
+
+        $total_teachers = 77;
+        $total_non_teachers = 97;
+        $teachers_entered = count($data['teachers']);
+        $non_teachers_entered = count($data['non_teachers']);
+        $data['total_teachers_entered'] = $teachers_entered;
+        $data['total_non_teachers_entered'] = $non_teachers_entered;
+        $data['teacher_per'] = $this->teacher->get_percent_of_emp_entered($total_teachers, $teachers_entered);
+        $data['non_teacher_per'] = $this->teacher->get_percent_of_emp_entered($total_non_teachers, $non_teachers_entered);
+
+        // Get Current month percent
+        
+        $cur_month = $this->teacher->get_current_month();
+        $data['current_month'] = $cur_month['dt'];
+        $data['cur_teacher'] = $this->teacher->get_employee_id_by_month($cur_month['dt'], "teaching");
+        $data['cur_non_teacher'] = $this->teacher->get_employee_id_by_month($cur_month['dt'], "non-teaching");
+        $cur_teacher_entered = count($data['cur_teacher']);
+        $cur_non_teacher_entered = count($data['cur_non_teacher']);        
+        $data['cur_teacher_per'] = $this->teacher->get_percent_of_emp_entered_by_type("teaching", 77, $cur_teacher_entered);
+        $data['cur_non_teacher_per'] = $this->teacher->get_percent_of_emp_entered_by_type("non-teaching", 97, $cur_non_teacher_entered);
+        // Load the view
 		$this->load->view('teachers_list', $data);		
 	}
 
@@ -22,6 +43,11 @@ class Teaching extends CI_Controller {
 		if($_POST) {
 			// Perform validation
 			$config = array(
+                    array(
+                        'field' => 'emp_cat',
+                        'label' => 'Employee Category',
+                        'rules' => 'required'
+                    ),
                     array(
                         'field' => 'name',
                         'label' => 'Name',
@@ -39,13 +65,18 @@ class Teaching extends CI_Controller {
                     ),
                     array(
                         'field' => 'staff_id',
-                        'label' => 'Department',
+                        'label' => 'Staff ID',
                         'rules' => 'trim|required|is_unique[emp_info.staff_id]'
                     ),
                     array(
                         'field' => 'account_no',
                         'label' => 'Account Number',
                         'rules' => 'trim|required|is_unique[emp_info.account_no]'
+                    ),
+                    array(
+                        'field' => 'gpf_account_no',
+                        'label' => 'GPF Account Number',
+                        'rules' => 'trim|is_unique[emp_info.gpf_account_no]'
                     )
                 );
 			$this->load->library('form_validation');
@@ -55,11 +86,13 @@ class Teaching extends CI_Controller {
             } else {
             	$data = array(
                 'emp_type' => $_POST['emp_type'],
+                'emp_cat' => $_POST['emp_cat'],
 				'name' => $_POST['name'],
 				'designation' => $_POST['designation'],
 				'department' => $_POST['department'],
                 'staff_id' => $_POST['staff_id'],
-				'account_no' => $_POST['account_no']
+				'account_no' => $_POST['account_no'],
+                'gpf_account_no' => $_POST['gpf_account_no']
 				);
 				$teacher_id = $this->teacher->save_teacher($data);
 				$this->session->set_flashdata('message', "<p>Employee's information has been successfully saved!</p>");
@@ -88,7 +121,8 @@ class Teaching extends CI_Controller {
                 'designation' => $_POST['designation'],
                 'department' => $_POST['department'],
                 'staff_id' => $_POST['staff_id'],
-                'account_no' => $_POST['account_no']
+                'account_no' => $_POST['account_no'],
+                'gpf_account_no' => $_POST['gpf_account_no']
                 );
             $data_pay = array(
                 'emp_type' => $_POST['emp_type']
@@ -256,8 +290,50 @@ class Teaching extends CI_Controller {
     }
 
     function pay_details() {
-        $data['month_list'] = $this->teacher->get_all_months();
-        $this->load->view('pay_details', $data);
+        $data['message'] = "";
+        if($_POST) {
+            $valid = TRUE;
+            $sel_month = $_POST['sel_month'];
+            $emp_type = $_POST['emp_type'];
+            if(($emp_type == "") || ($sel_month == "")) {
+                $data['message'] = "<p>Please Select both fields!</p>";
+                $valid = FALSE;
+            }
+            if($valid == TRUE) {
+                //Get percent
+                $data['emp'] = $this->teacher->get_employee_id_by_month($sel_month, $emp_type);
+                if($data['emp'] == NULL) {
+                    $data['message'] = "<h4>No records found for {$sel_month}</h4>";
+                }
+                $emp_entered = count($data['emp']);
+                if($emp_type == "teaching") {
+                    $total_emp = 77;
+                } else {
+                    $total_emp = 97;
+                }
+                $data['emp_percent'] = $this->teacher->get_percent_of_emp_entered($total_emp, $emp_entered);
+                $i = 0;
+                foreach($data['emp'] as $emps) {
+                    $data['cur_emp'][$i] = $this->teacher->get_teacher_by_id($emps['emp_id']);
+                    $data['cur_emp'][$i]['date_added'] = $emps['date'];
+                    $i++;
+                    //print_r($data['date_added']);
+                }
+                $data['month_list'] = $this->teacher->get_all_months();
+                $data['sel_month'] = $sel_month;
+                $this->load->view('pay_details', $data);
+            } else {
+                $data['emp'] = NULL;
+                $data['month_list'] = $this->teacher->get_all_months();
+                $data['sel_month'] = $sel_month;
+                $this->load->view('pay_details', $data);
+            }
+        } else {
+            $data['emp'] = NULL;
+            $data['month_list'] = $this->teacher->get_all_months();
+            $this->load->view('pay_details', $data);
+        }
+        
     }
 
     function pay_summary() {

@@ -1,14 +1,8 @@
 <?php $this->load->view('header'); ?>
       <div class="span10">
         <div class="row-fluid">
-          <div class="hero-unit" style="padding:30px;">
-            <h2>Welcome to NIT PATNA</h2>
-            <p>Accounts Management Section</p>
-            <p>
-              <a class="btn btn-primary btn-large">
-                Learn more
-              </a>
-            </p>
+          <div class="well">
+            <h3>Edit Information for : <?php echo $cur_emp['name'] ?></h3>
           </div>
           <?php if($message) { ?>
             <div class="alert alert-info">
@@ -27,6 +21,16 @@
                 <label class="radio inline">
                   <input type="radio" name="emp_type" id="non-teaching" value="non-teaching" <?php if($cur_emp['emp_type'] == "non-teaching") {echo "checked";} ?>> Non-teaching
                 </label>
+              </div>
+            </div>
+            <div class="control-group">
+              <label class="control-label" for="selEmployee">Employee Category</label>
+              <div class="controls">
+                <select name="emp_cat" id="emp_cat">
+                <option value="">--Select--</option>
+                  <option value="nps" <?php if($cur_emp['emp_cat'] == "nps") {echo "selected";} ?>>NPS</option>
+                  <option value="gpf" <?php if($cur_emp['emp_cat'] == "gpf") {echo "selected";} ?>>GPF</option>
+                </select>
               </div>
             </div>
             <div class="control-group">
@@ -59,10 +63,26 @@
                 <input type="text" name="account_no" id="inputEmail" placeholder="Account Number" value="<?php echo $cur_emp['account_no'] ?>" required>
               </div>
             </div>
+            <div class="control-group" id="gpf_div" style="display: none;">
+              <label class="control-label" for="gpf_ac_no">GPF Account Number</label>
+              <div class="controls">
+                <input type="text" name="gpf_account_no" id="gpf_account_no" placeholder="GPF Account Number" value="<?php echo $cur_emp['gpf_account_no'] ?>">
+              </div>
+            </div>
             
             <div class="form-actions">
               <input type="submit" name="submit" id="submit" value="Update" class="btn btn-primary btn-large pull-right">
             </div>
           </form> 
       </div>
+      <script>
+        $(document).ready(function() {
+          $('#emp_cat').attr('disabled', 'true');
+          $('#emp_cat').each(function() {
+            if($(this).val() == "gpf") {
+              $('#gpf_div').css('display', '');
+            }
+          })
+        })
+      </script>
 <?php $this->load->view('footer'); ?>
