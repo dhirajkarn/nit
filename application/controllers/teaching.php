@@ -147,6 +147,7 @@ class Teaching extends CI_Controller {
     function add_teacher_pay($emp_type, $emp_id) {
         $emp_type = $this->uri->segment(3);
         $emp_id = $this->uri->segment(4);
+        $data['cur_emp_cat'] = $this->teacher->get_emp_cat_by_id($emp_id);
         $data_latest['message'] = "";
         $data['message'] = "";
         if($_POST) {
@@ -166,6 +167,7 @@ class Teaching extends CI_Controller {
                 $data = array(
                 'emp_id' => $emp_id,
                 'emp_type' => $emp_type,
+                'emp_cat' => $data['cur_emp_cat']['emp_cat'],
                 'date' => $_POST['date'],
                 'month_added' => $month_added,
                 'ppb' => $_POST['ppb'],
@@ -226,6 +228,7 @@ class Teaching extends CI_Controller {
     function edit_employee_pay($emp_id, $month_added) {
         $emp_id = $this->uri->segment(3);
         $month_added = urldecode($this->uri->segment(4));
+        $data['cur_emp_cat'] = $this->teacher->get_emp_cat_by_id($emp_id);
         $data['cur_teacher'] = $this->teacher->get_teacher_by_id($emp_id);
         $data['cur_emp_pay'] = $this->teacher->get_employee_pay_by_month($emp_id, $month_added);
         $data['message'] = "";
@@ -238,6 +241,7 @@ class Teaching extends CI_Controller {
             }
             if($valid == TRUE) {
                 $data = array(
+                    'emp_cat' => $data['cur_emp_cat']['emp_cat'],
                     'date' => $_POST['date'],
                     'ppb' => $_POST['ppb'],
                     'agp' => $_POST['agp'],
@@ -334,6 +338,54 @@ class Teaching extends CI_Controller {
             $this->load->view('pay_details', $data);
         }
         
+    }
+
+    function salary_bill() {
+            $data['message'] = "";
+            $data['month_list'] = $this->teacher->get_all_months();
+            $this->load->view('salary_bill', $data);
+    }
+
+    function get_salary_bill() {
+        $valid = TRUE;
+        $data['sel_month'] = $_POST['sel_month'];
+        $data['emp_type'] = $_POST['emp_type'];
+        $data['emp_cat'] = $_POST['emp_cat'];
+        if(($data['emp_type'] == "") || ($data['sel_month'] == "") || ($data['emp_cat'] == "")) {
+            $this->session->set_flashdata('message', "<p>Please select all the fields!</p>") ;
+            $valid = FALSE;
+            redirect(base_url().'teaching/salary_bill');
+        }
+        if($valid == TRUE) {
+            // Pay
+            $data['ppb_total'] = 0;
+            $data['agp_total'] = 0;
+            $data['bp_total'] = 0;
+            $data['da_total'] = 0;
+            $data['hra_total'] = 0;
+            $data['ta_total'] = 0;
+            $data['spl_allowance_total'] = 0;
+            $data['tel_allowance_total'] = 0;
+            $data['total_amount_total'] = 0;
+
+            // Deductions
+            $data['pf_total'] = 0;
+            $data['it_total'] = 0;
+            $data['hrd_total'] = 0;
+            $data['ec_total'] = 0;
+            $data['gsli_deduction_total'] = 0;
+            $data['total_deduction_total'] = 0;
+
+            // Total amount
+            $data['net_amount_total'] = 0;
+            $data['emp'] = $this->teacher->get_employee_summary($data['emp_type'], $data['emp_cat'], $data['sel_month']);
+            if($data['emp'] == NULL) {
+                $this->session->set_flashdata('message', "<p>No records to show!</p>") ;
+                $valid = FALSE;
+                redirect(base_url().'teaching/salary_bill');
+            }
+            $this->load->view('salary_bill_by_month', $data);
+        }
     }
 
     function pay_summary() {

@@ -55,7 +55,7 @@
             <li class="nav-header">Teaching Staff</li>
             <li><a href="<?php echo base_url(); ?>">Home</a></li>
             <li><a href="<?php echo base_url(); ?>teaching/pay_details">Pay Details</a></li>
-            <li><a href="#">Download</a></li>
+            <li><a href="<?php echo base_url(); ?>teaching/salary_bill">Salary Bill</a></li>
             <li><a href="#">Tutorials</a></li>
             <li><a href="#">Blogs</a></li>
             <li><a href="#">About Us</a></li>

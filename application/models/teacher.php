@@ -37,50 +37,17 @@ class Teacher extends CI_Model {
 		return $query->first_row('array');
 	}
 
-	// function get_all_nps_teachers() {
-	// 	$where = array(
-	// 		'emp_type' => 'teaching',
-	// 		'emp_cat' => 'nps'
-	// 		);
-	// 	$this->db->select()->from('emp_info')->where($where);
- //        $query = $this->db->get();
- //        return $query->result_array();
-	// }
-
-	// function get_all_gpf_teachers() {
-	// 	$where = array(
-	// 		'emp_type' => 'teaching',
-	// 		'emp_cat' => 'gpf'
-	// 		);
-	// 	$this->db->select()->from('emp_info')->where($where);
- //        $query = $this->db->get();
- //        return $query->result_array();
-	// }
-
-	// function get_all_nps_non_teachers() {
-	// 	$where = array(
-	// 		'emp_type' => 'non-teaching',
-	// 		'emp_cat' => 'nps'
-	// 		);
-	// 	$this->db->select()->from('emp_info')->where($where);
- //        $query = $this->db->get();
- //        return $query->result_array();
-	// }
-
-	// function get_all_gpf_non_teachers() {
-	// 	$where = array(
-	// 		'emp_type' => 'non-teaching',
-	// 		'emp_cat' => 'gpf'
-	// 		);
-	// 	$this->db->select()->from('emp_info')->where($where);
- //        $query = $this->db->get();
- //        return $query->result_array();
-	// }
 
 	function get_all_months_entered($emp_type, $emp_id) {
 		$sql = "SELECT *, month_added FROM emp_pay WHERE emp_type='{$emp_type}' AND emp_id = {$emp_id} ORDER BY date DESC";
 		$query = $this->db->query($sql);
 		return $query->result_array();
+	}
+
+	function get_emp_cat_by_id($emp_id) {
+		$this->db->select('emp_cat')->from('emp_info')->where('id', $emp_id);
+		$query = $this->db->get();
+		return $query->first_row('array');
 	}
 
 	function get_teacher_by_id($emp_id) {
@@ -200,6 +167,21 @@ class Teacher extends CI_Model {
 		$sql = "SELECT emp_id, DATE_FORMAT(date, '%d/%c/%Y') as date FROM emp_pay WHERE DATE_FORMAT(date, '%M %Y') = '{$sel_month}' AND emp_type = '{$emp_type}'";
 		$query = $this->db->query($sql);
 		return $query->result_array();
+	}
+
+	function get_employee_summary($emp_type, $emp_cat, $sel_month) {
+		$where = array(
+			'emp_pay.emp_type' => $emp_type,
+			'emp_pay.emp_cat' => $emp_cat,
+			'month_added' => $sel_month
+			);
+		$this->db->select('*');
+        $this->db->from('emp_pay');
+        $this->db->join('emp_info', 'emp_pay.emp_id = emp_info.id');
+        $this->db->where($where);
+        
+        $query = $this->db->get();
+        return $query->result_array();
 	}
 
 }

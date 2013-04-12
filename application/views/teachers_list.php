@@ -2,8 +2,8 @@
       <div class="span10">
         <div class="row-fluid">
 
-          <div class="span8">
-              <h2 class="text-info">NIT PATNA</h2><hr>
+          <div class="span9" style="border-right:1px solid #ccc;">
+              <h2 class="text-info">NIT PATNA</h2><br>
               <p class="lead text-info">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Fugit, consequatur aliquid nulla optio  quo culpa.</p>
           </div>
           <div class="span3 pull-right">
