@@ -184,4 +184,10 @@ class Teacher extends CI_Model {
         return $query->result_array();
 	}
 
+	function get_salary_range($emp_id, $start_date, $end_date) {
+		$sql = "SELECT * FROM emp_pay WHERE date BETWEEN '{$start_date}' AND '{$end_date}' AND emp_id={$emp_id}";
+		$query = $this->db->query($sql);
+		return $query->result_array();
+	}
+
 }

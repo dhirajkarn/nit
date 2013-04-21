@@ -40,14 +40,14 @@
                     </div>
                     <label>Dearness Allowance</label>
                     <div class="input-prepend input-append">
-                      <input class="span8 required number" type="text" name="da_per" id="da_per">
+                      <input class="span8 required number" type="text" name="da_per" id="da_per" value="72">
                       <span class="add-on">%</span>
                     </div>
                   </div><!-- end of 1st row of pay -->
                   <div class="span3">
                     <label>House Rent Allowance</label>
                     <div class="input-prepend input-append">
-                      <input class="span8 required number" type="text" name="hra_per" id="hra_per">
+                      <input class="span8 required number" type="text" name="hra_per" id="hra_per" value="20">
                       <span class="add-on">%</span>
                     </div>
                     <label>Transport Allowance</label>
@@ -183,7 +183,7 @@
                       <label>DATE</label>
                       <div class="input-prepend input-append">
                         <span class="add-on">@</span>
-                        <input class="span8 required" id="date" type="text" name="date" value="<?php echo $cur_emp_pay['date']; ?>">
+                        <input class="span8 required" id="date" type="text" name="date" value="">
                       </div>
                     </div>
                   </div>

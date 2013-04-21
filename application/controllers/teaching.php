@@ -7,8 +7,9 @@ class Teaching extends CI_Controller {
 	}
 
     function test() {
-        $cur_m = $this->teacher->get_current_month();
-        echo $cur_m['dt'];
+        echo date("Y-m-d");
+        echo "<br>";
+        echo date("F Y");
     }
 
 	function index() {
@@ -103,10 +104,14 @@ class Teaching extends CI_Controller {
 	}
 
     function employee_details($emp_type, $emp_id) {
+        $data['info'] = "";
         $emp_type = $this->uri->segment(3);
         $emp_id = $this->uri->segment(4);
         $data['employee'] = $this->teacher->get_teacher_by_id($emp_id);
         $data['emp_months_info'] = $this->teacher->get_all_months_entered($emp_type, $emp_id);
+        if($data['emp_months_info'] == NULL) {
+            $data['info'] = "<p><span class=\"label label-warning\">{$data['employee']['name']}'s pay hasn't been added yet!</span><p>";
+        }
         $this->load->view('employee_details', $data);
     }
 
@@ -204,7 +209,7 @@ class Teaching extends CI_Controller {
                 if($teacher_id) {
                     $data['cur_teacher'] = $this->teacher->get_teacher_by_id($emp_id);
                     $this->session->set_flashdata('message', "<p><span class=\"label label-success\">Success</span>&emsp; <em>{$data['cur_teacher']['name']}'s</em> pay details for the month <strong>{$month_added}</strong> have been successfully saved!</p>");
-                    redirect(base_url());
+                    redirect(base_url()."teaching/employee_details/{$emp_type}/{$emp_id}");
                 }
             } else {
                 $data['message'] = "<p><span class=\"label label-warning\">Warning</span>&emsp; Duplicate Entry for the month <strong>{$month_added}</strong> !</p>";
@@ -223,6 +228,68 @@ class Teaching extends CI_Controller {
         }
 
         
+    }
+
+    function add_previous_pay($emp_type, $emp_id) {
+        $emp_type = $this->uri->segment(3);
+        $emp_id = $this->uri->segment(4);
+        $valid = TRUE;
+        $data['cur_emp_cat'] = $this->teacher->get_emp_cat_by_id($emp_id);
+        $data['prev_month_pay'] = $this->teacher->get_employee_latest_pay($emp_id);
+        $cur_date = date("Y-m-d");
+        $cur_month = date("F Y");
+        if($cur_month == $data['prev_month_pay']['month_added']) {
+            $this->session->set_flashdata('message', "<p>Employee pay has already been entered for the current month!</p>");
+            $valid = FALSE;
+            redirect(base_url()."teaching/employee_details/{$emp_type}/{$emp_id}");
+        }
+        if($data['prev_month_pay'] == NULL) {
+            $this->session->set_flashdata('message', "<p>No previous records found! Please add new!</p>");
+            $valid = FALSE;
+            redirect(base_url()."teaching/employee_details/{$emp_type}/{$emp_id}");
+        }
+        if($valid == TRUE) {
+            $pay = array(
+                'emp_id' => $emp_id,
+                'emp_type' => $emp_type,
+                'emp_cat' => $data['cur_emp_cat']['emp_cat'],
+                'date' => $cur_date,
+                'month_added' => $cur_month,
+                'ppb' => $data['prev_month_pay']['ppb'],
+                'agp' => $data['prev_month_pay']['agp'],
+                'bp' => $data['prev_month_pay']['bp'],
+                'da' => $data['prev_month_pay']['da'],
+                'hra' => $data['prev_month_pay']['hra'],
+                'ta' => $data['prev_month_pay']['ta'],
+                'washing_allowance' => $data['prev_month_pay']['washing_allowance'],
+                'other_allowance' => $data['prev_month_pay']['other_allowance'],
+                'spl_allowance' => $data['prev_month_pay']['spl_allowance'],
+                'hostel_supdt' => $data['prev_month_pay']['hostel_supdt'],
+                'family_planning' => $data['prev_month_pay']['family_planning'],
+                'tel_allowance' => $data['prev_month_pay']['tel_allowance'],
+                'total_amount' => $data['prev_month_pay']['total_amount'],
+                'pf' => $data['prev_month_pay']['pf'],
+                'nps_contribution' => $data['prev_month_pay']['nps_contribution'],
+                'it' => $data['prev_month_pay']['it'],
+                'hrd' => $data['prev_month_pay']['hrd'],
+                'ec' => $data['prev_month_pay']['ec'],
+                'gsli_deduction' => $data['prev_month_pay']['gsli_deduction'],
+                'festival_adv_recovery' => $data['prev_month_pay']['festival_adv_recovery'],
+                'gpf_loan_recovery' => $data['prev_month_pay']['gpf_loan_recovery'],
+                'bike_com_recovery' => $data['prev_month_pay']['bike_com_recovery'],
+                'loan_recovery' => $data['prev_month_pay']['loan_recovery'],
+                'lic_2_deduction' => $data['prev_month_pay']['lic_2_deduction'],
+                'flood_donation' => $data['prev_month_pay']['flood_donation'],
+                'pro_tax_deduction' => $data['prev_month_pay']['pro_tax_deduction'],
+                'other_deduction' => $data['prev_month_pay']['other_deduction'],
+                'total_deduction' => $data['prev_month_pay']['total_deduction'],
+                'net_amount' => $data['prev_month_pay']['net_amount']
+                );
+            $this->teacher->save_teacher_pay($pay);
+            $data['cur_teacher'] = $this->teacher->get_teacher_by_id($emp_id);
+            $this->session->set_flashdata('message', "<p><span class=\"label label-success\">Success</span>&emsp; <em>{$data['cur_teacher']['name']}'s</em> pay details for the month <strong>{$cur_month}</strong> have been successfully saved!</p>");
+            redirect(base_url()."teaching/employee_details/{$emp_type}/{$emp_id}");
+        }
     }
 
     function edit_employee_pay($emp_id, $month_added) {
@@ -346,6 +413,35 @@ class Teaching extends CI_Controller {
             $this->load->view('salary_bill', $data);
     }
 
+    function salary_advice() {
+            $data['message'] = "";
+            $data['month_list'] = $this->teacher->get_all_months();
+            $this->load->view('salary_advice', $data);
+    }
+
+    function get_salary_advice() {
+        $valid = TRUE;
+        $data['sel_month'] = $_POST['sel_month'];
+        $data['emp_type'] = $_POST['emp_type'];
+        $data['emp_cat'] = $_POST['emp_cat'];
+        if(($data['emp_type'] == "") || ($data['sel_month'] == "") || ($data['emp_cat'] == "")) {
+            $this->session->set_flashdata('message', "<p>Please select all the fields!</p>") ;
+            $valid = FALSE;
+            redirect(base_url().'teaching/salary_bill');
+        }
+        if($valid == TRUE) {
+            // Pay
+            $data['net_amount_total'] = 0;
+            $data['emp'] = $this->teacher->get_employee_summary($data['emp_type'], $data['emp_cat'], $data['sel_month']);
+            if($data['emp'] == NULL) {
+                $this->session->set_flashdata('message', "<p>No records to show!</p>") ;
+                $valid = FALSE;
+                redirect(base_url().'teaching/salary_bill');
+            }
+            $this->load->view('salary_advice_by_month', $data);
+        }
+    }
+
     function get_salary_bill() {
         $valid = TRUE;
         $data['sel_month'] = $_POST['sel_month'];
@@ -394,5 +490,49 @@ class Teaching extends CI_Controller {
         $data['teacher'] = $this->teacher->get_teacher_by_id($emp_id);
         $data['teacher_pay'] = $this->teacher->get_teacher_pay_by_month($emp_id, $sel_month);
         $this->load->view('pay_summary', $data);
+    }
+
+    function get_salary_statement($emp_id) {
+        $emp_id = $this->uri->segment(3);
+        $valid = TRUE;
+        if($_POST) {
+            $data['start_date'] = $_POST['start_date'];
+            $data['end_date'] = $_POST['end_date'];
+            $data['emp'] = $this->teacher->get_teacher_by_id($emp_id);
+            if(($data['start_date'] == "") || ($data['end_date'] == "")) {
+                $this->session->set_flashdata('message', "<p>Please select both the fields!</p>") ;
+                $valid = FALSE;
+                redirect(base_url()."teaching/employee_details/{$data['emp']['emp_type']}/{$data['emp']['id']}");
+            }
+            if($valid == TRUE) {
+                $data['ppb_total'] = 0;
+                $data['agp_total'] = 0;
+                $data['bp_total'] = 0;
+                $data['da_total'] = 0;
+                $data['hra_total'] = 0;
+                $data['ta_total'] = 0;
+                $data['spl_allowance_total'] = 0;
+                $data['tel_allowance_total'] = 0;
+                $data['total_amount_total'] = 0;
+
+                // Deductions
+                $data['pf_total'] = 0;
+                $data['it_total'] = 0;
+                $data['hrd_total'] = 0;
+                $data['ec_total'] = 0;
+                $data['gsli_deduction_total'] = 0;
+                $data['total_deduction_total'] = 0;
+
+                // Total amount
+                $data['net_amount_total'] = 0;
+                $data['salary_range'] = $this->teacher->get_salary_range($emp_id, $data['start_date'], $data['end_date']);
+                if($data['salary_range'] == NULL) {
+                    $this->session->set_flashdata('message', "<p>No records to show!</p>") ;
+                    $valid = FALSE;
+                    redirect(base_url()."teaching/employee_details/{$data['emp']['emp_type']}/{$data['emp']['id']}");
+                }
+                $this->load->view('salary_range', $data);
+            }
+        }
     }
 }

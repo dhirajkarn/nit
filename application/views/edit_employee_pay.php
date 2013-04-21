@@ -40,14 +40,14 @@
                     </div>
                     <label>Dearness Allowance</label>
                     <div class="input-prepend input-append">
-                      <input class="span8 required number" type="text" name="da_per" id="da_per">
+                      <input class="span8 required number" type="text" name="da_per" id="da_per" value="72">
                       <span class="add-on">%</span>
                     </div>
                   </div><!-- end of 1st row of pay -->
                   <div class="span3">
                     <label>House Rent Allowance</label>
                     <div class="input-prepend input-append">
-                      <input class="span8 required number" type="text" name="hra_per" id="hra_per">
+                      <input class="span8 required number" type="text" name="hra_per" id="hra_per" value="20">
                       <span class="add-on">%</span>
                     </div>
                     <label>Transport Allowance</label>

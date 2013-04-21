@@ -1,20 +1,21 @@
 <?php $this->load->view('header'); ?>
       <div class="span10">
         <div class="row-fluid">
-
-          <div class="span9" style="border-right:1px solid #ccc;">
+          <div class="span8">
               <h2 class="text-info">NIT PATNA</h2><br>
-              <p class="lead text-info">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Fugit, consequatur aliquid nulla optio  quo culpa.</p>
+              <p class="lead text-info">Accounts Section</p>
           </div>
-          <div class="span3 pull-right">
-            <h5 class="text-info"><?php echo $current_month ?> Launch</h5>
-            <span class="muted">Teachers<small> ( <?php echo count($cur_teacher) ?> / 77 )</small></span>
-            <div class="progress progress-success">
-              <div class="bar" style="width : <?php echo $cur_teacher_per ?>;"></div>
-            </div>
-            <span class="muted">Non-teachers<small> ( <?php echo count($cur_non_teacher) ?> / 97 )</small></span>
-            <div class="progress">
-              <div class="bar" style="width : <?php echo $cur_non_teacher_per ?>;"></div>
+          <div class="span4 pull-right">
+            <div class="hero-unit" style="padding : 15px 25px 20px 25px; background-color: #fff;">
+              <h5 class="text-info text-center"><?php echo $current_month ?> Launch</h5>
+              <span class="muted">Teachers<small> ( <?php echo count($cur_teacher) ?> / 77 )</small></span>
+              <div class="progress progress-success">
+                <div class="bar" style="width : <?php echo $cur_teacher_per ?>;"></div>
+              </div>
+              <span class="muted">Non-teachers<small> ( <?php echo count($cur_non_teacher) ?> / 97 )</small></span>
+              <div class="progress">
+                <div class="bar" style="width : <?php echo $cur_non_teacher_per ?>;"></div>
+              </div>
             </div>
           </div>
         </div><br>

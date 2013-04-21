@@ -28,7 +28,9 @@
         </div>
         <hr>
         <div class="row-fluid">
-          <h4><?php echo $employee['name'] ?>'s <small>Pay Details have been saved for the following months : </small></h4>
+          <div class="span6">
+          <h4 class="text-info">Pay Details</h4>
+          <?php if($info) { echo $info; } ?>
             <?php foreach($emp_months_info as $row) { ?>
               <div class="input-append">
                 <a class="btn" style="width: 200px;" href="<?php echo base_url() ?>teaching/pay_summary/<?php echo $row['emp_id'] ?>/<?php echo $row['month_added'] ?>"><?php echo $row['month_added'] ?></a>
@@ -37,11 +39,27 @@
               </div>
               <br>
             <?php } ?>
+            <a class="btn btn-primary" href="<?php echo base_url(); ?>teaching/add_teacher_pay/<?php echo $employee['emp_type'] ?>/<?php echo $employee['id'] ?>">Add Pay</a>
+            <a class="btn btn-primary" href="<?php echo base_url(); ?>teaching/add_previous_pay/<?php echo $employee['emp_type'] ?>/<?php echo $employee['id'] ?>">Add as Previous Month</a>
+          </div>
+          <div class="span4">
+          <h4 class="text-info">Salary Statement</h4>
+            <form action="<?php echo base_url(); ?>/teaching/get_salary_statement/<?php echo $employee['id'] ?>" method="post" class="form-inline">
+              <div class="input-prepend input-append">
+                <span class="add-on">From</span>
+                <input class="span4 required" id="start_date" type="text" name="start_date" placeholder="StartDate">
+                <span class="add-on">To</span>
+                <input class="span4 required" id="end_date" type="text" name="end_date" placeholder="EndDate">
+                <input type="submit" name="submit" id="submit" value="Go" class="btn btn-primary">
+              </div>
+            </form>
+          </div>
         </div>
-        <div class="row-fluid">
-          <a class="btn btn-primary btn-large" href="<?php echo base_url(); ?>teaching/add_teacher_pay/<?php echo $employee['emp_type'] ?>/<?php echo $employee['id'] ?>">Add Pay</a>
-        </div>
-        
       </div>
-      
+      <script>
+        $(document).ready(function() {
+          $('#start_date, #end_date').datepicker({dateFormat : 'yy-mm-dd',
+             showAnim : 'fade' });
+        })
+      </script>
 <?php $this->load->view('footer'); ?>
