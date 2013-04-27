@@ -7,9 +7,9 @@ class Teaching extends CI_Controller {
 	}
 
     function test() {
-        echo date("Y-m-d");
-        echo "<br>";
-        echo date("F Y");
+        $this->load->view('header');
+        show_404("Could not load!");
+        $this->load->view('footer');
     }
 
 	function index() {

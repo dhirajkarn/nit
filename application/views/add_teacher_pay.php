@@ -131,7 +131,7 @@
                     </div>
                 </div><!-- end of 2nd row of deduction -->
                   <div class="span3">
-                    <label>Festival Advanced Recovery</label>
+                    <label>Festival Advanced Recovery <?php if($cur_teacher['emp_type'] == "non-teaching") { ?><sup><span class="label label-important">NA</span></sup><?php } ?></label>
                     <div class="input-prepend input-append">
                       <input class="span8 required number" type="text" name="festival_adv_recovery" id="festival_adv_recovery" value="<?php echo $cur_emp_pay['festival_adv_recovery']; ?>">
                       <span class="add-on">.00</span>
