@@ -1,0 +1,24 @@
+@import url(bootstrap.css);
+
+/*
+	My custom outline-style: 
+
+*/
+.nav-list {
+	//background-color: aqua;
+	/*padding-top: 15px;
+	padding-bottom: 15px;*/
+}
+
+.nav-list > .active > a, .nav-list > .active > a:hover, .nav-list > .active > a:focus {
+	border-radius: 5px;
+}
+
+.muted {
+	font-size: 13px;
+}
+
+.hero-unit, .well {
+	background-color: orange;
+	color : #fff;
+}

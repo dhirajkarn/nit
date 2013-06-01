@@ -2,7 +2,7 @@
       <div class="span10">
         <div class="row-fluid">
           <div class="span8">
-              <h2 class="text-info">NIT PATNA</h2><br>
+              <h2 class="text-info">NIT PATNA</h2>
               <p class="lead text-info">Accounts Section</p>
           </div>
           <div class="span4 pull-right">
@@ -18,7 +18,7 @@
               </div>
             </div>
           </div>
-        </div><br>
+        </div>
         <div class="row-fluid">
           <?php if($this->session->flashdata('message')) { ?>
             <div class="alert alert-info">

@@ -8,7 +8,7 @@
 <script src="<?php echo base_url() ?>assets/js/jquery.js"></script>
 
     <!-- Bootstrap -->
-    <link href="<?php echo base_url() ?>assets/css/bootstrap.css" rel="stylesheet" media="screen">
+    <link href="<?php echo base_url() ?>assets/css/style.css" rel="stylesheet" media="screen">
     <link rel="stylesheet" href="<?php echo base_url() ?>assets/css/ui-lightness/jquery-ui-1.10.0.custom.css">
     <style>
       body {
