@@ -106,7 +106,7 @@
 	           ?>
 	          <tr>
 	            <td><strong><?php echo $i; ?></strong></td>
-	            <td><a href="<?php echo base_url() ?>/teaching/pay_summary/<?php echo $row['id'] ?>/<?php echo $sel_month ?>"><?php echo $row['name'] ?></a></td>
+	            <td><a href="<?php echo base_url() ?>teaching/employee_details/<?php echo $row['emp_type'] ?>/<?php echo $row['id'] ?>"><?php echo $row['name'] ?></a></td>
 	            <td><?php echo $row['ppb'] ?></td>
 	            <td><?php echo $row['agp'] ?></td>
 	            <td><?php echo $row['bp'] ?></td>
